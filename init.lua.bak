@@ -1,0 +1,57 @@
+-- init.lua Michael Lannert
+-- lua functions for easier config
+function map(mode, lhs, rhs, opts) 
+	return vim.api.nvim_set_keymap(mode, lhs, rhs, opts) 
+end
+
+-- for setting vim options
+function set(x) 
+	return vim.cmd.set(x) 
+end
+
+-- for running vim commands
+function c(cmd)
+	return vim.cmd(cmd)
+end
+
+c("colorscheme murphy")
+
+-- FOLDS
+-- folding options
+set("foldcolumn=4")
+
+-- save folds for lua-files, and load view on edit
+c("au BufWinLeave *.lua mkview")          
+c("au BufWinEnter *.lua silent! loadview")
+
+-- edit this init.lua
+map("n","<leader>ü", ":vsp ~\\AppData\\Local\\nvim\\init.lua<CR>", {}) -- speichern mit ,I
+-- timeout for multiple keys, leaderkey
+
+set("timeoutlen=350 ttimeoutlen=350") 
+
+set("number") -- numbered lines
+set("acd") -- auto chdir, changes pwd to directory of file in buffer
+set("hls") -- highlighted search
+set("incsearch") -- increamental search
+set("clipboard=unnamedplus") -- OS clipboard support
+set("autoindent") -- linebreak applies indent of line above
+
+-- remapping of keys
+-- leader
+vim.g.mapleader=[[,]]
+map("n","<leader>,", ":w<CR>", {}) -- speichern mit ,,
+map("n","<leader>QQ", ":q!<CR>", {}) -- verlassen ohne Speichern mit ,Q
+map("n","<leader>h", ":nohls<CR>", {}) -- toggles highlight search mit ,h
+
+-- esc to jk in insert and visual mode 
+map("i", "kj", "<Esc>", {})
+map("i", "jk", "<Esc>", {})
+map("v", "kj", "<Esc>", {})
+map("v", "jk", "<Esc>", {})
+
+-- fold toggling with space
+map("n"," ", "za", {})
+
+-- Treesitter
+--vim.treesitter.require_language("lua", "C:\\Program Files (x86)\\Lua\\5.1")
